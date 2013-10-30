@@ -78,4 +78,4 @@ ouput channel to report the results of each match as [move1 move2 winner]."
         (recur (dec remaining)
                (merge-with + results {winner 1}))))))
 
-(play (init "Chris" "Frankie"))
+(play game)
