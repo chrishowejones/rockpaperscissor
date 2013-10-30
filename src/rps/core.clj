@@ -1,6 +1,5 @@
 (ns rps.core
-  (:use [clojure.core.async]
-   ))
+  (:use [clojure.core.async]))
 
 ;;; core.clj --- Short description.
      ;;
@@ -19,7 +18,7 @@
 ;(require 'clojure.core.async :refer :all)
 
 (def MOVES [:rock :paper :scissors])
-(def BEATS {:rock :scissors, :paper :rock, :scissors :paper})
+(def BEATS {:rock :scissors :paper :rock :scissors :paper})
 
 (defn rand-player
   "Create a named player and return a channel to report moves."
@@ -33,7 +32,7 @@
   [[name1 move1] [name2 move2]]
   (cond
    (= move1 move2) "no one"
-   (= move2 (BEATS move1)) name1
+   (= move2 (move1 BEATS)) name1
    :else name2))
 
 (defn judge
@@ -49,8 +48,8 @@ ouput channel to report the results of each match as [move1 move2 winner]."
     out))
 
 (defn init
-  "Create 2 players (by default Alice and Bob) and return an output channel of match results."
-  ([] (init "Alice" "Bob"))
+  "Create 2 players (by default Bailey and Dexter) and return an output channel of match results."
+  ([] (init "Bailey" "Dexter"))
   ([n1 n2] (judge (rand-player n1) (rand-player n2))))
 
 (defn report
@@ -78,3 +77,5 @@ ouput channel to report the results of each match as [move1 move2 winner]."
       (let [[m1 m2 winner] (<!! out-chan)]
         (recur (dec remaining)
                (merge-with + results {winner 1}))))))
+
+(play (init "Chris" "Frankie"))
